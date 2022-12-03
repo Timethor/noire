@@ -499,6 +499,15 @@ func (c Color) Complement() Color {
 	return c.AdjustHue(180)
 }
 
+func (c Color) Triad(spread float64) (Color, Color) {
+	return c.AdjustHue(spread), c.AdjustHue(-spread)
+}
+
+func (c Color) Tetrad(spread float64) (Color, Color, Color) {
+	cm := c.Complement()
+	return cm, c.AdjustHue(spread), cm.AdjustHue(spread)
+}
+
 // Tint increases the brightness of the color while keeping the color tone, same as `Mix` with a white color. (`0.5` as `50%`)
 func (c Color) Tint(percent float64) Color {
 	return c.Mix(newColor(255, 255, 255, c.Alpha), percent)
@@ -577,6 +586,16 @@ func (c Color) Contrast(color Color) float64 {
 	c2 := color.LuminanaceWCAG() + 0.05
 	v := math.Max(c1, c2) / math.Min(c1, c2)
 	return math.Round(v*100) / 100
+}
+
+// Tx returns a new Color based on this color with the Alpha channel set to a
+func (c Color) Tx(a float64) Color {
+	if a < 0 {
+		a = 0
+	} else if a > 1 {
+		a = 1
+	}
+	return newColor(c.Red, c.Green, c.Blue, a)
 }
 
 // IsLight returns true if the color is a light scheme, it might not be the same as what human eyes can see.

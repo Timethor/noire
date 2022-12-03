@@ -335,3 +335,19 @@ func TestHTML(t *testing.T) {
 	c.Alpha = 0.5
 	assert.Equal("rgba(219.000000, 112.000000, 147.000000, 0.500000)", c.HTML())
 }
+
+func TestTx(t *testing.T) {
+	assert := assert.New(t)
+	c := NewRGB(219, 112, 148)
+	c = c.Tx(.3)
+	_, _, _, a := c.RGBA()
+	assert.Equal(a, .3)
+
+	c = c.Tx(-1)
+	_, _, _, a = c.RGBA()
+	assert.Equal(a, 0.0)
+
+	c = c.Tx(3)
+	_, _, _, a = c.RGBA()
+	assert.Equal(a, 1.0)
+}
