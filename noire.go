@@ -3,6 +3,7 @@ package noire
 import (
 	"encoding/hex"
 	"fmt"
+	"image/color"
 	"math"
 	"strings"
 )
@@ -638,4 +639,13 @@ func (c Color) HTML() string {
 		return fmt.Sprintf("rgba(%f, %f, %f, %f)", c.Red, c.Green, c.Blue, c.Alpha)
 	}
 	return RGBToHTML(c.Red, c.Green, c.Blue)
+}
+
+func (c Color) ToRaylib() color.RGBA {
+	return color.RGBA{
+		R: uint8(c.Red),
+		G: uint8(c.Green),
+		B: uint8(c.Blue),
+		A: uint8(c.Alpha * 255),
+	}
 }
