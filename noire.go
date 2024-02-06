@@ -641,6 +641,11 @@ func (c Color) RGBA() (float64, float64, float64, float64) {
 	return c.Red, c.Green, c.Blue, c.Alpha
 }
 
+// RGBA8 returns the RGBA value of the current color in uint8's.
+func (c Color) RGBA8() []byte {
+	return []byte{uint8(c.Red), uint8(c.Green), uint8(c.Blue), uint8(c.Alpha * 255)}
+}
+
 // CMYK returns the CMYK value of the current color.
 func (c Color) CMYK() (float64, float64, float64, float64) {
 	return RGBToCMYK(c.Red, c.Green, c.Blue)
